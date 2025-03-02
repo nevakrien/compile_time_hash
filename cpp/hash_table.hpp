@@ -172,22 +172,6 @@ std::optional<std::reference_wrapper<V>> get(const K& key) {
     return std::nullopt;  // Key not found
 }
 
-// Retrieve the value associated with a key (constexpr version for base array only)
-constexpr std::optional<std::reference_wrapper<const V>> get_constexpr(const K& key) const {
-    size_t index = std::hash<K>{}(key) % base_size;
-
-    if (index < base_size) {
-        auto* node = base_array[index] ? &base_array[index].value() : nullptr;
-        while (node) {
-            if (node->key == key) {
-                return std::cref(node->value);
-            }
-            node = node->next.get();
-        }
-    }
-    return std::nullopt;  // Key not found
-}
-
 
 // Remove the key-value pair associated with a key
 bool erase(const K& key) {
