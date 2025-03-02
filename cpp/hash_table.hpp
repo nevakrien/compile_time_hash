@@ -65,7 +65,8 @@ public:
         size_t new_heap_size = heap_size * 2 + 10;
 
         // Allocate new larger array
-        std::unique_ptr<std::unique_ptr<HashNode<K, V>>[]> new_heap_array(new std::unique_ptr<HashNode<K, V>>[new_heap_size]());
+        auto new_heap_array = std::make_unique<std::unique_ptr<HashNode<K, V>>[]>(new_heap_size);
+
 
         // Move entries from old heap array to new array
         for (size_t i = 0; i < heap_size; ++i) {
